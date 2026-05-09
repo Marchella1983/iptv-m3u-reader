@@ -118,6 +118,8 @@ config.plugins.m3uiptv.inextensions = ConfigYesNo(default=False)
 config.plugins.m3uiptv.display_poster = ConfigYesNo(default=True)
 config.plugins.m3uiptv.picon_threads = ConfigSelectionNumber(min=50, max=1000, stepwidth=50, default=100, wraparound=True)
 config.plugins.m3uiptv.bouquet_names_case = ConfigSelection(default=2, choices=[(0, _("Original case")), (1, _("lower case")), (2, _("UPPER case"))])
+choicelistcatchup = [(i, ngettext("%d second", "%d seconds", i) % i) for i in [1, 2, 3, 5, 7, 10, 15]]  # noqa: F821
+config.plugins.m3uiptv.catchup_eof_timeout = ConfigSelection(default=3, choices=choicelistcatchup)
 fpicon_locs = []
 if searchPaths:
 	fpicon_locs = [(x.removesuffix("/"), x.removesuffix("/")) for x in searchPaths]
@@ -2144,10 +2146,15 @@ class IPTVPluginConfig(Setup):
 		configlist.append((_("Bouquet name character case"), config.plugins.m3uiptv.bouquet_names_case, _("Specify the character case used for bouquet names and titles.")))
 		configlist.append((_("VoD playback system"), config.plugins.m3uiptv.vod_play_system, _("Specify the type of services that will be generated for VoD items.")))
 		configlist.append((_("Download and display posters for VoD items"), config.plugins.m3uiptv.display_poster, _("Download and display posters for VoD items if available.")))
+		try:
+			configlist.append((_("Size of buffer for http streaming"), config.usage.http_buffersize, _("Configure the buffer size for http streaming. A larger buffer can help with stuttering when the network connection is not stable, but also increases the delay between the stream and live TV.")))
+		except:
+			pass
 		if searchPaths:
 			configlist.append((_("Fallback location for picons"), config.plugins.m3uiptv.fallback_picon_loc, _("Fallback loction for picons used when current active picon location can not be detected.")))
 		configlist.append(("---",))
 		configlist.append((_("Enable catchup/archive entries in EPG screens for period"), config.epg.histminutes, _("Enables possibility to return back in epg screens so to use old entries for invoke catchup/archive/timeshift.")))
+		configlist.append((_("Catchup/Archive EOF timeout"), config.plugins.m3uiptv.catchup_eof_timeout, _("Timeout in seconds for the catchup/archive playback eof timeout to be delayed.")))
 		configlist.append((_("Local EPG server listening port") + " *", config.plugins.m3uiptv.epg_loc_port, _("A local port for the EPG server. Mainly used for Stalker portals due to lack of persistent EPG.")))
 		configlist.append(("---",))
 		if hasattr(config, "recording") and hasattr(config.recording, "setstreamto1"):
