@@ -860,7 +860,7 @@ msgstr "Geben Sie den Typ der Dienste an, die für VoD-Elemente generiert werden
 
 #: ../src/plugin.py:1839
 msgid ""
-"Specifying the URL scheme that unicly identify the provider.\n"
+"Specifying the URL scheme that uniquely identify the provider.\n"
 "Can be anything you like without spaces and special characters."
 msgstr "Geben Sie das URL-Schema an, das den Anbieter eindeutig identifiziert.\nEs kann beliebig gewählt werden, jedoch ohne Leerzeichen und Sonderzeichen."
 "Angabe des URL-Schemas zur eindeutigen Identifizierung des Anbieters.\n"

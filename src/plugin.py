@@ -1948,7 +1948,7 @@ class M3UIPTVProviderEdit(Setup):
 					configlist.append((_("Custom XMLTV URL"), self.custom_xmltv_url, _("The URL where EPG data for this provider can be downloaded.")))
 				# if self.type.value == "Stalker" and self.create_epg.value and not self.is_custom_xmltv.value:
 				# configlist.append((_("EPG entry GMT offset"), self.epg_time_offset, _("Set time offset in hours towards GMT.")))
-		configlist.append((_("Scheme"), self.scheme, _("Specifying the URL scheme that unicly identify the provider.\nCan be anything you like without spaces and special characters.")))
+		configlist.append((_("Scheme"), self.scheme, _("Specifying the URL scheme that uniquely identify the provider.\nCan be anything you like without spaces and special characters.")))
 		if self.type.value != "VOD":
 			configlist.append((_("Playback system"), self.play_system, _("The player used. Can be DVB, GStreamer, HiSilicon, Extplayer3")))
 			configlist.append((_("Playback system for Catchup/Archive"), self.play_system_catchup, _("The player used for playing Catchup/Archive. Can be GStreamer/HiSilicon, Extplayer3")))

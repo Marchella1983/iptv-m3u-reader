@@ -849,7 +849,7 @@ msgstr "Укажите тип услуг, которые будут создан
 
 #: ../src/plugin.py:1839
 msgid ""
-"Specifying the URL scheme that unicly identify the provider.\n"
+"Specifying the URL scheme that uniquely identify the provider.\n"
 "Can be anything you like without spaces and special characters."
 msgstr ""
 "Указание схемы URL, которая однозначно идентифицирует провайдера.\n"
