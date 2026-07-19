@@ -300,6 +300,8 @@ class CatchupPlayer(MoviePlayer):
 			saveResumePoints()
 
 	def __evServiceStart(self):
+		if not self.execing:
+			return
 		self.allow_eof = False
 		if self.eof_timer:
 			self.eof_timer.start(config.plugins.m3uiptv.catchup_eof_timeout.value * 1000, True)
@@ -343,6 +345,14 @@ class CatchupPlayer(MoviePlayer):
 			self.progress_timer.callback.remove(self.onProgressTimer)
 		if self.seek_timer:
 			self.seek_timer.callback.remove(self.onSeekRequest)
+
+	def handleLeave(self, what):
+		self.selected_subtitle = None
+		real_lastservice = self.lastservice
+		self.lastservice = None
+		self.servicelist = None
+		MoviePlayer.handleLeave(self, what)
+		self.session.nav.playService(real_lastservice)
 
 	def leavePlayer(self):
 		self.setResumePoint()

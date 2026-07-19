@@ -102,7 +102,7 @@ class M3UProvider(IPTVProcessor):
 				epg_match = self.searchForXMLTV(line, self.is_custom_xmltv)
 				if epg_match:
 					self.epg_url = epg_match.group(1)
-					self.is_dynamic_epg = not self.static_urls and not self.isLocalPlaylist()
+					self.is_dynamic_epg = not self.static_urls
 				continue
 			if self.ignore_vod and "group-title=\"VOD" in line:
 				continue
@@ -153,7 +153,7 @@ class M3UProvider(IPTVProcessor):
 						if subst_match and subst_match.group(1) in subst.substitions:
 							catchupreftype = subst.substitions[subst_match.group(1)]
 
-				if self.static_urls or self.isLocalPlaylist():
+				if self.static_urls:
 					found_url = False
 					next_line_nr = line_nr + 1
 					while not found_url:
@@ -369,7 +369,8 @@ class M3UProvider(IPTVProcessor):
 
 	def processDownloadPlaylist(self, nref, channelForSearch, origRef, iptvinfodata, backup_ref, orig_name, event=None):
 		try:
-			self.checkForNetwrok()
+			if not self.isLocalPlaylist():
+				self.checkForNetwrok()
 			channelForSearch = channelForSearch.replace("%3a", ":")
 			channelSID = self.search_criteria.replace("{SID}", channelForSearch)
 			prov = self
@@ -382,14 +383,24 @@ class M3UProvider(IPTVProcessor):
 			if (prov.refresh_interval == -1 and prov.playlist) or (prov.refresh_interval > 0 and time_delta and time_delta < cache_time):
 				playlist = prov.playlist
 			else:
-				req = self.constructRequest(prov.url)
-				req_timeout_val = config.plugins.m3uiptv.req_timeout.value
-				if req_timeout_val != "off":
-					response = urllib.request.urlopen(req, timeout=int(req_timeout_val))
+				if self.isLocalPlaylist():
+					if not fileExists(prov.url):
+						print("[M3UIPTV] [M3U] Local playlist file not found: " + prov.url)
+						self.isPlayBackup = True
+						self.nnref = eServiceReference(backup_ref + ":")
+						return self.nnref  # , nref
+					fd = open(prov.url, 'rb')
+					playlist = fd.read().decode('utf-8')
+					prov.playlist = playlist
 				else:
-					response = urllib.request.urlopen(req, timeout=10)  # set a timeout to prevent blocking
-				playlist = response.read().decode('utf-8')
-				prov.playlist = playlist
+					req = self.constructRequest(prov.url)
+					req_timeout_val = config.plugins.m3uiptv.req_timeout.value
+					if req_timeout_val != "off":
+						response = urllib.request.urlopen(req, timeout=int(req_timeout_val))
+					else:
+						response = urllib.request.urlopen(req, timeout=10)  # set a timeout to prevent blocking
+					playlist = response.read().decode('utf-8')
+					prov.playlist = playlist
 				if cache_time > 0:
 					prov.last_exec = cur_time
 
