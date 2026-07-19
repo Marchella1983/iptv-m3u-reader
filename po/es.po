@@ -853,7 +853,7 @@ msgstr "Especifique cómo se harán coincidir las entradas xmltv con los canales
 
 #: ../src/plugin.py:1839
 msgid ""
-"Specifying the URL scheme that unicly identify the provider.\n"
+"Specifying the URL scheme that uniquely identify the provider.\n"
 "Can be anything you like without spaces and special characters."
 msgstr ""
 "Especifica el esquema de URL que identifica de forma única al proveedor.\n"

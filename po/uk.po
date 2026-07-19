@@ -853,7 +853,7 @@ msgstr "Вкажіть тип послуг, створених для елеме
 
 #: ../src/plugin.py:1839
 msgid ""
-"Specifying the URL scheme that unicly identify the provider.\n"
+"Specifying the URL scheme that uniquely identify the provider.\n"
 "Can be anything you like without spaces and special characters."
 msgstr ""
 "Вказівка схеми URL-адреси, яка однозначно ідентифікує провайдера.\n"
