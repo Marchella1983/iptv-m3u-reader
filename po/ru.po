@@ -1173,3 +1173,17 @@ msgstr "выкл"
 #: ../src/plugin.py:1752
 msgid "on"
 msgstr "вкл"
+
+#: ../src/plugin.py:2150
+msgid "Size of buffer for http streaming"
+msgstr "Размер буфера для http-стриминга"
+
+msgid "Configure the buffer size for http streaming. A larger buffer can help with stuttering when the network connection is not stable, but also increases the delay between the stream and live TV."
+msgstr "Настройте размер буфера для потоковой передачи по протоколу HTTP. Чем больше буфер, тем меньше зависаний при нестабильном сетевом соединении, но при этом увеличивается задержка между потоком и прямой трансляцией."
+
+#: ../src/plugin.py:2157
+msgid "Catchup/Archive EOF timeout"
+msgstr "Тайм-аут на получение данных из Catchup/Archive EOF"
+
+msgid "Catchup/Archive EOF timeout"
+msgstr "Время ожидания в секундах, на которое откладывается таймаут при воспроизведении записей из Catchup/Archive EOF или при наверстывании пропущенного контента"
